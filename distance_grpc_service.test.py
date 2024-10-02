@@ -45,6 +45,18 @@ class TestDistance(unittest.TestCase):
             self.assertEqual(result["distance"], -1)
             self.assertEqual(result["unit"], "invalid")
 
+    def test_longitudeMayor180(self):
+        result = result = test_valid_request(90, 181, -50 ,182, "km")
+        if self.assertRaises(ValueError):
+            self.assertEqual(result["distance"], -1)
+            self.assertEqual(result["unit"], "invalid")
+
+    def test_longitudeMenor180(self):
+        result = test_valid_request(90, -181, -50 ,-182, "km")
+        if self.assertRaises(ValueError):
+            self.assertEqual(result["distance"], -1)
+            self.assertEqual(result["unit"], "invalid")
+
     def test_valoresString(self):
         result = test_valid_request("0", "0", "0", "0","km")
         if self.assertRaises(ValueError):
@@ -59,8 +71,6 @@ class TestDistance(unittest.TestCase):
         result = test_valid_request(70, 70, 70, 70,"yd")
         with self.assertRaises(ValueError):
             pass
-
-#prueba
 
 
 
