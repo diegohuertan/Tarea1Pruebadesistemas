@@ -5,7 +5,6 @@ import distance_unary_pb2 as pb2
 from geo_location import Position
 from helpers import Distance
 
-
 class DistanceServicer(pb2_grpc.DistanceServiceServicer):
     def geodesic_distance(self, request, context):
         if request.unit == "km":
