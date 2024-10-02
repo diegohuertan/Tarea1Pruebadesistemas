@@ -3,6 +3,8 @@ from google.protobuf.json_format import MessageToJson
 from distance_grpc_service import *
 import json
 import grpc
+from distanceserviceORS import *
+
 
 
 def test_valid_request(sourcelat, sourcelon, destinationlat, destinationlon, unit):
@@ -60,8 +62,18 @@ class TestDistance(unittest.TestCase):
         with self.assertRaises(ValueError):
             pass
 
-#prueba
+    def test_distance(self):
+        result = test_valid_request(13.38886, 52.51704, 13.39784, 52.50931,"km")
+        API_KEY = '5b3ce3597851110001cf624898b34a01a6994f7899837fe3eb028422'
+        distance_service = DistanceServiceORS(API_KEY)
 
+        # Coordenadas en Berlín
+        start = (13.38886, 52.51704)  # Brandenburg Gate
+        end = (13.39784, 52.50931)  # Checkpoint Charlie
+
+        distanceORS = distance_service.calculate_distance(start, end)
+        margen_error = 0.2
+        self.assertAlmostEquals(result["distance"], distanceORS, delta=margen_error )
 
 
 if __name__ == '__main__':

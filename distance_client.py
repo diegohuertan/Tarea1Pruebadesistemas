@@ -11,10 +11,10 @@ if __name__ == "__main__":
         # a SourceDest contains two Position: source and destination
         message = pb2.SourceDest(
             source=pb2.Position(
-                latitude=-90, longitude=-70.5955963
+                latitude=13.38886, longitude=52.51704
             ),
             destination=pb2.Position(
-                latitude=91, longitude=-71.5980458
+                latitude=13.39784, longitude=52.50931
             ),
             unit="km"
         )
