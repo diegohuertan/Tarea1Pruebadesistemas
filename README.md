@@ -3,3 +3,4 @@ distanceserviceORS.py es un servicio llamado mediante api el cual retorna de igu
 
 El archivo distance_grpc_service.test.py es el archivo que utilizamos para crear la clase de testing donde se aplicaron los Unit Test.
  
+nota: instalar ORS (pip install openrouteservice)
