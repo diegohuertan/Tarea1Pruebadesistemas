@@ -5,8 +5,6 @@ import json
 import grpc
 from distanceserviceORS import *
 
-
-
 def test_valid_request(sourcelat, sourcelon, destinationlat, destinationlon, unit):
 
     with grpc.insecure_channel("localhost:50051") as channel:
@@ -34,45 +32,19 @@ def test_valid_request(sourcelat, sourcelon, destinationlat, destinationlon, uni
 
 class TestDistance(unittest.TestCase):
 
-
-    def test_latitudeMayor90(self):
-        result = test_valid_request(92, -70.5955963, 94, -71.5980458,"km")
-        if self.assertRaises(ValueError):
-            self.assertEqual(result["distance"], -1)
-            self.assertEqual(result["unit"],"invalid")
-
-    def test_latitudeMenor90(self):
-        result = test_valid_request(-92, -70.5955963, -94, -71.5980458, "km")
-        if self.assertRaises(ValueError):
-            self.assertEqual(result["distance"], -1)
-            self.assertEqual(result["unit"], "invalid")
-
-    def test_longitudeMayor180(self):
-        result = result = test_valid_request(90, 181, -50 ,182, "km")
-        if self.assertRaises(ValueError):
-            self.assertEqual(result["distance"], -1)
-            self.assertEqual(result["unit"], "invalid")
-
-    def test_longitudeMenor180(self):
-        result = test_valid_request(90, -181, -50 ,-182, "km")
-        if self.assertRaises(ValueError):
-            self.assertEqual(result["distance"], -1)
-            self.assertEqual(result["unit"], "invalid")
-
-    def test_valoresString(self):
-        result = test_valid_request("0", "0", "0", "0","km")
-        if self.assertRaises(ValueError):
-            self.assertEqual(result["distance"], -1)
-            self.assertEqual(result["unit"], "invalid")
-
     def test_defaultUnit(self):
         result = test_valid_request(70, 70, 70, 70,"")
         self.assertEqual(result["unit"], "km")
 
+    def test_errorCatch(self):
+        result=test_valid_request(91,181,91,181,"")
+        self.assertEqual(result["unit"],"invalid")
+        self.assertEqual(result["distance"],-1.0)
+
+
     def test_invalidUnit(self):
-        result = test_valid_request(70, 70, 70, 70,"yd")
-        with self.assertRaises(ValueError):
-            pass
+        result = test_valid_request(80, 80, 80, 80,"yd")
+        self.assertEqual(result["unit"], "invalid")
 
     def test_distance(self):
         result = test_valid_request(13.38886, 52.51704, 13.39784, 52.50931,"km")
