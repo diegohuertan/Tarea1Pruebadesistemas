@@ -1,7 +1,7 @@
 import unittest
 from geo_location import *
 
-class MyTestCase(unittest.TestCase):
+class TestGeo_location(unittest.TestCase):
 
 
     def test_latitudMayor90(self):
